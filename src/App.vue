@@ -1,7 +1,10 @@
+
+
 <template>
+
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link>
+      <HomePage></HomePage>
     </nav>
 
     <main>
@@ -11,6 +14,7 @@
 </template>
 
 <script setup>
+import HomePage from '@/components/HomePage.vue'
 </script>
 
 <style>
