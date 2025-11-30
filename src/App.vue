@@ -2,39 +2,21 @@
 
 <template>
 
-  <div id="app">
-    <nav>
-      <HomePage></HomePage>
-    </nav>
+<div id="app">
+
 
     <main>
       <router-view />
     </main>
-  </div>
+ </div>
 </template>
 
 <script setup>
-import HomePage from '@/components/HomePage.vue'
 </script>
 
 <style>
-#app {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-}
 
-nav {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-nav a {
-  text-decoration: none;
-  color: #1976d2;
-}
-
-nav a.router-link-active {
-  font-weight: bold;
+body {
+  font-family: 'Literata', serif;
 }
 </style>
