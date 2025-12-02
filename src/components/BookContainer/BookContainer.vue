@@ -11,6 +11,9 @@
         <BookCard
           v-for="n in 8"
           :key="n"
+            title="O Hobbit"
+            created_at="2025-12-01"
+            thumbnail="@\assets\174827825468349bee15244_1748278254_16x9_md.jpg"
         />
       </div>
 
