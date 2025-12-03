@@ -1,11 +1,10 @@
 <template>
   <div class="p-4 bg-white rounded-xl">
     <div class="h-40 bg-gray-200 rounded-lg mb-8 overflow-hidden">
-      <img
-        v-if="thumbnail"
+      <img 
         :src="thumbnail"
-        alt="Thumbnail"
-        class="w-full h-full object-cover"
+        alt="Imagem"
+        class="w-full h-auto rounded-xl shadow"
       />
     </div>
 
