@@ -11,26 +11,13 @@
         @click="openModal"
         class="flex items-center gap-2 text-gray-400 hover:text-gray-600 text-lg font-medium">
         <!-- Ícone SVG -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-7 w-7"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="1.8"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M5.121 17.804A9 9 0 1119.5 12m-7.5 9a9 9 0 019-9"
-          />
-        </svg>
+        <font-awesome-icon icon="user" class="text-gray-700 text-2xl" />
 
         <!-- Nome do usuário -->
         Login
       </button>
     </div>
-  <LoginModal v-if="showModal" @close="closeModal" />
+  <LoginModal  />
 </div>  
     
 </template>
