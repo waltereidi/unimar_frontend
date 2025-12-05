@@ -1,6 +1,13 @@
 <template>
 <!-- Modal -->
-  <div
+     <section class="mb-3" @click="clickModal"> 
+      <slot >
+        <!-- Conteúdo padrão do slot principal -->
+        <p>Abrir Modal</p>
+      </slot>
+    </section>
+
+  <div v-if="showModal"
    
     class="fixed inset-0 flex items-center justify-center z-50"
   >
@@ -8,8 +15,8 @@
 
       <!-- Botão Fechar -->
       <button
-        @click="closeModal"
-        class="absolute top-3 right-3 text-gray-500 hover:text-black"
+        
+        class="absolute top-3 right-3 text-gray-500 hover:text-black" @click="clickModal"
       >
         ✕
       </button>
@@ -40,5 +47,13 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+
+const showModal = ref(false)
+
+function clickModal() {
+  showModal.value =!showModal.value;
+}
+
 
 </script>
