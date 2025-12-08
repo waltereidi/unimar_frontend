@@ -1,4 +1,7 @@
 
+<script setup>
+import Toast from './components/ToastMessage/ToastMessage.vue'
+</script>
 
 <template>
 
@@ -7,6 +10,7 @@
 
     <main>
       <router-view />
+      <Toast />
     </main>
  </div>
 </template>

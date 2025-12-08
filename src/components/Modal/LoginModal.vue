@@ -16,8 +16,7 @@
       <!-- Botão Fechar -->
       <button
         
-        class="absolute top-3 right-3 text-gray-500 hover:text-black" @click="clickModal"
-      >
+        class="absolute top-3 right-3 text-gray-500 hover:text-black" @click="clickModal">
         ✕
       </button>
 
@@ -37,6 +36,7 @@
 
       <button
         class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+        @click="login"
       >
         Entrar
       </button>
@@ -48,12 +48,18 @@
 
 <script setup>
 import { ref } from 'vue'
-
+import { showToast } from '@/components/ToastMessage/toast.js'
 const showModal = ref(false)
 
 function clickModal() {
   showModal.value =!showModal.value;
 }
-
+function login()
+{
+  
+}
+function enviar() {
+  showToast("Enviado com sucesso!", 2500)
+}
 
 </script>

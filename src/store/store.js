@@ -1,12 +1,21 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
-export const useCounterStore = defineStore('store', {
+export const useAuthStore = defineStore('auth', {
   state: () => ({
-    count: 0
+    token: localStorage.getItem('jwtToken') || null,
   }),
+  getters: {
+    isAuthenticated: (state) => !!state.token, // retorna true se houver token
+    hasToken: (state) => state.token !== null && state.token !== '', // verifica se token tem algum valor
+  },
   actions: {
-    increment() {
-      this.count++;
+    setToken(newToken) {
+      this.token = newToken
+      localStorage.setItem('jwtToken', newToken)
+    },
+    clearToken() {
+      this.token = null
+      localStorage.removeItem('jwtToken')
     }
   }
-});
+})

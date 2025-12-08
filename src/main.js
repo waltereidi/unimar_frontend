@@ -20,6 +20,7 @@ library.add(faUser, faHome, faArrowRightToBracket)
 const app = createApp(App);
 app.config.globalProperties.$db = db;
 
+  
 app.use(router);
 app.use(pinia);
 app.component('font-awesome-icon', FontAwesomeIcon)
