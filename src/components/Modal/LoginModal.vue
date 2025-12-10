@@ -49,6 +49,10 @@
 <script setup>
 import { ref } from 'vue'
 import { showToast } from '@/components/ToastMessage/toast.js'
+import { useAuthStore } from '@/store/store.js'
+import { authentication } from '@/services/httpRequest.js'
+
+const authStore = useAuthStore();
 const showModal = ref(false)
 
 function clickModal() {
@@ -56,7 +60,8 @@ function clickModal() {
 }
 function login()
 {
-  
+  console.log('inicializado login')
+  authentication({email:'walter-eidi@hotmail.com' , password:'eidi1234'}).then((r)=>console.log(r))
 }
 function enviar() {
   showToast("Enviado com sucesso!", 2500)

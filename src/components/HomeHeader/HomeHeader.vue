@@ -6,7 +6,7 @@
   </div>
   <div class="w-3/5 flex items-center justify-center text-[32px]"> Livros Expo</div>
   <div class="w-1/5 flex items-center justify-end pr-4">
-    <LoginModal >
+    <LoginModal v-if="!authStore.isAuthenticated">
       <button
           class="flex items-center gap-2 text-gray-400 hover:text-gray-600 text-lg font-medium">
           <!-- Ícone SVG -->
@@ -23,7 +23,9 @@
 <script setup>
 import { ref } from 'vue'
 import LoginModal from '@/components/Modal/LoginModal.vue'
+import { useAuthStore } from '@/store/store.js'
 
-const showModal = ref(false)
+const authStore = useAuthStore();
+const showModal = ref(false);
 
 </script>

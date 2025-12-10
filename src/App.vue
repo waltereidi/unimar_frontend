@@ -16,6 +16,8 @@ import Toast from './components/ToastMessage/ToastMessage.vue'
 </template>
 
 <script setup>
+
+
 </script>
 
 <style>
