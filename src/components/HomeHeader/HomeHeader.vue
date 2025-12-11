@@ -15,14 +15,15 @@
           Login
       </button>
     </LoginModal>
+    <UserLogged :nome="authStore.getNome" v-else></UserLogged>
   </div>
-  
 </div>  
     
 </template>
 <script setup>
 import { ref } from 'vue'
 import LoginModal from '@/components/Modal/LoginModal.vue'
+import UserLogged from '../UserLogged/UserLogged.vue';
 import { useAuthStore } from '@/store/store.js'
 
 const authStore = useAuthStore();

@@ -12,7 +12,17 @@ export default ({ mode }) => {
       vue(),
       tailwindcss()
     ],
-
+     watch: {
+    usePolling: true,
+    interval: 100,
+  },
+  host: true,
+  strictPort: true,
+    hmr: {
+    protocol: 'ws',
+    host: 'localhost',
+    port: 5173
+  },
     define: {
       __APP_ENV__: JSON.stringify(env.VITE_ENV)
     },
