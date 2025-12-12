@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import BookCard from '@/components/BookCard/BookCard.vue'
-
+import { getBooks } from '@/services/httpRequest.js'
 // Lista inicial (somente exemplo com dados repetidos)
 const books = ref([])
 
@@ -9,15 +9,26 @@ const itemsPerPage = 10
 let page = 1
 
 // Função que carrega mais 10 itens
-const loadMore = () => {
-  for (let i = 0; i < itemsPerPage; i++) {
-    books.value.push({
-      id: books.value.length + 1,
-      title: "O Hobbit",
-      created_at: "2025-12-01",
-      thumbnail: "/src/assets/174827825468349bee15244_1748278254_16x9_md.jpg"
-    })
+
+
+const loadMore = async() => {
+  // for (let i = 0; i < itemsPerPage; i++) {
+  //   books.value.push({
+  //     id: books.value.length + 1,
+  //     title: "O Hobbit",
+  //     created_at: "2025-12-01",
+  //     thumbnail: "/src/assets/174827825468349bee15244_1748278254_16x9_md.jpg"
+  //   })
+  // }
+  try{
+    var result = await getBooks(page);
+    books.value.push(result)
+  }catch(ex)
+  {
+    
   }
+  
+
 }
 
 // Detectar final da página

@@ -27,10 +27,19 @@ export async function authentication(body) {
     body: JSON.stringify(body)
 
   });
+  
 
   if (!response.ok) {
     throw new Error(`Erro na API: ${response.status}`);
   }
 
   return await response.json();
+}
+
+export async function getBooks(page) {
+  const response = await fetch(`${API_URL}/Home/GetBooks?page=${page}`, {
+    method: "GET",
+    headers:getHeaders(), 
+
+  });
 }
