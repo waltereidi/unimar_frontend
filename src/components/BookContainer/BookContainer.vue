@@ -22,7 +22,10 @@ const loadMore = async() => {
   // }
   try{
     var result = await getBooks(page);
-    books.value.push(result)
+    result.forEach(f=> books.value.push(f)) 
+    page++;
+
+
   }catch(ex)
   {
     
@@ -55,14 +58,14 @@ onBeforeUnmount(() => {
 <template>
   <div class="w-full bg-white py-10">
     <div class="max-w-5xl mx-auto px-4">
-
+      
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-12">
         <BookCard
           v-for="book in books"
           :key="book.id"
           :title="book.title"
           :created_at="book.created_at"
-          :thumbnail="book.thumbnail"
+          :thumbnail="book.thumNail"
         />
       </div>
 

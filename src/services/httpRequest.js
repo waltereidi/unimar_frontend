@@ -42,4 +42,5 @@ export async function getBooks(page) {
     headers:getHeaders(), 
 
   });
+  return await response.json();
 }
