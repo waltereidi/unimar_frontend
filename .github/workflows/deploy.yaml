@@ -2,14 +2,11 @@ name: Vue.js Build and Deploy (Local Runner)
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
   build:
-    name: Build Vue.js
     runs-on: ubuntu-latest
 
     steps:
@@ -23,20 +20,30 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      - name: Build do Vue
+      - name: Build Vite
         run: npm run build
 
-      - name: Verificar dist
-        run: ls -la dist
+      - name: Descobrir pasta de saída
+        id: outdir
+        run: |
+          if [ -d dist ]; then
+            echo "dir=dist" >> $GITHUB_OUTPUT
+          elif [ -d build ]; then
+            echo "dir=build" >> $GITHUB_OUTPUT
+          elif [ -d .output/public ]; then
+            echo "dir=.output/public" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Nenhuma pasta de build encontrada"
+            exit 1
+          fi
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: vue-dist
-          path: dist
+          path: ${{ steps.outdir.outputs.dir }}
 
   deploy:
-    name: Deploy no Local Runner
     runs-on: self-hosted
     needs: build
 
