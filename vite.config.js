@@ -38,8 +38,10 @@ export default ({ mode }) => {
       open: true,
     },
 
+    
     build: {
-      outDir: mode === 'production' ? 'dist-prod' : 'dist-dev'
+      outDir: 'build',
+      emptyOutDir: true
     }
   });
 };
