@@ -9,13 +9,15 @@ on:
 
 jobs:
   build:
-    name: Build Vue.js
+    name: Build Vue.js (GitHub Runner)
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
@@ -23,34 +25,40 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      - name: Build do Vue
+      - name: Build do projeto Vue
         run: npm run build
 
-      - name: Verificar dist
-        run: ls -la dist
-
-      - name: Upload artifact
+      - name: Upload do build como artifact
         uses: actions/upload-artifact@v4
         with:
           name: vue-dist
           path: dist
+          retention-days: 1
 
   deploy:
-    name: Deploy no Local Runner
+    name: Deploy + Start Node (Local Runner)
     runs-on: self-hosted
     needs: build
 
     steps:
-      - name: Preparar diretório
+      - name: Limpar e criar diretório de deploy
         run: |
           mkdir -p "${{ vars.PATH }}"
           rm -rf "${{ vars.PATH }}/*"
 
-      - name: Download artifact
+      - name: Download do artifact
         uses: actions/download-artifact@v4
         with:
           name: vue-dist
           path: ${{ vars.PATH }}
 
-      - name: Verificar deploy
-        run: ls -la "${{ vars.PATH }}"
+      - name: Instalar dependências de produção
+        run: |
+          cd "${{ vars.PATH }}"
+          npm install --omit=dev
+
+      - name: Reiniciar aplicação Node (PM2)
+        run: |
+          pm2 delete livrosexpo || true
+          pm2 start npm --name "livrosexpo" -- run serve
+          pm2 save
