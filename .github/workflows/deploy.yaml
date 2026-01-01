@@ -1,0 +1,64 @@
+name: Vue.js Build and Deploy (Local Runner)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Vue.js (GitHub Runner)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Build do projeto Vue
+        run: npm run build
+
+      - name: Upload do build como artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vue-dist
+          path: dist
+          retention-days: 1
+
+  deploy:
+    name: Deploy + Start Node (Local Runner)
+    runs-on: self-hosted
+    needs: build
+
+    steps:
+      - name: Limpar e criar diretório de deploy
+        run: |
+          mkdir -p "${{ vars.DEPLOY_PATH }}"
+          rm -rf "${{ vars.DEPLOY_PATH }}/*"
+
+      - name: Download do artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: vue-dist
+          path: ${{ vars.DEPLOY_PATH }}
+
+      - name: Instalar dependências de produção
+        run: |
+          cd "${{ vars.DEPLOY_PATH }}"
+          npm install --omit=dev
+
+      - name: Reiniciar aplicação Node (PM2)
+        run: |
+          pm2 delete livrosexpo || true
+          pm2 start npm --name "livrosexpo" -- run serve
+          pm2 save
