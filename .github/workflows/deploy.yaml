@@ -43,18 +43,18 @@ jobs:
     steps:
       - name: Limpar e criar diretório de deploy
         run: |
-          mkdir -p "${{ vars.DEPLOY_PATH }}"
-          rm -rf "${{ vars.DEPLOY_PATH }}/*"
+          mkdir -p "${{ vars.PATH }}"
+          rm -rf "${{ vars.PATH }}/*"
 
       - name: Download do artifact
         uses: actions/download-artifact@v4
         with:
           name: vue-dist
-          path: ${{ vars.DEPLOY_PATH }}
+          path: ${{ vars.PATH }}
 
       - name: Instalar dependências de produção
         run: |
-          cd "${{ vars.DEPLOY_PATH }}"
+          cd "${{ vars.PATH }}"
           npm install --omit=dev
 
       - name: Reiniciar aplicação Node (PM2)
