@@ -5,20 +5,21 @@
         :src="thumbnailSrc"
         alt="Imagem"
         class="w-full h-auto rounded-xl shadow"
-        @error="defaultThumb"
+        @error="onImageError"
       />
     </div>
 
     <h3 class="text-lg font-regular text-center text-[16px]">
-      {{title}}
+      {{ title }}
     </h3>
-    <p class="text-lg font-regular text-center text-[16px]">{{created_at}}</p>
+    <p class="text-lg font-regular text-center text-[16px]">
+      {{ created_at }}
+    </p>
   </div>
 </template>
 
-
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps({
   title: {
@@ -34,13 +35,19 @@ const props = defineProps({
     default: ''
   }
 })
-const thumbBaseUrl = new URL('@/assets/thumbNails/', import.meta.url).href
-const thumbnailSrc = computed(() => {
-const defaultThumb =()=> `${thumbBaseUrl}/defaultBook.png`;
 
-  console.log(thumbBaseUrl)
+const FILE_SERVER = import.meta.env.VITE_FILE_SERVER
+const defaultImage = `${FILE_SERVER}/defaultBook.png`
+
+const currentSrc = ref('')
+
+const thumbnailSrc = computed(() => {
   return props.thumbnail
-    ? `${thumbBaseUrl}/${props.thumbnail}`
-    : `${thumbBaseUrl}/defaultBook.png`
+    ? `${FILE_SERVER}/${props.thumbnail}`
+    : defaultImage
 })
+
+const onImageError = (event) => {
+  event.target.src = defaultImage
+}
 </script>
